@@ -1,0 +1,28 @@
+.value-text {
+    color: white;
+    font-size: 0.7rem;
+    margin-top: 0px;
+    margin-left: auto;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    pointer-events: none;
+
+}
+
+.knob-container {
+    display: inline-block;
+    /* position: relative; */
+    text-align: center;
+    margin: 0.5em;
+}
+
+.label {
+    color: white;
+    font-size: 0.7rem;
+    position: relative;
+    top: -15px;
+    pointer-events: none;
+}
