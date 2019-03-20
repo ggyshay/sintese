@@ -4,6 +4,7 @@ import { strings } from './strings';
 import "./App.css"
 import { SubtractiveSynthesis } from './interactions/subtractive';
 import { FMSynthesis } from './interactions/fm';
+import GithubIC from './assets/github-icon.svg';
 
 class App extends Component<any, any>  {
   private ctx: AudioContext;
@@ -19,21 +20,28 @@ class App extends Component<any, any>  {
   render() {
     return (
       <div className="page">
-        <h2 className="page-title">{strings.title}</h2>
-
+        <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }} >
+          <h2 className="page-title">{strings.title}</h2>
+          <a href="https://github.com/ggyshay">
+            <img src={GithubIC} alt="github" className="unselectable githubIcon" />
+          </a>
+        </div>
         <h3 className="subtitle">{strings.soundPhysics.title}</h3>
         <p className="body-text">{strings.soundPhysics.paragraphs[0]}</p>
         <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-          <video width="80%" autoPlay loop muted style={{ margin: 'auto' }}>
-            <source src={require("./assets/room-waves.mp4")} type="video/mp4" />
-          </video>
+          {/* <video width="80%" autoPlay loop muted style={{ margin: 'auto' }}> */}
+          {/* <source src={require("./assets/room-waves.webm")} type="video/WebM" /> */}
+          <img src={require('./assets/roomWaves.gif')} width='100%' />
+          {/* <source src={require("./assets/room-waves.mp4")} type="video/mp4" /> */}
+          {/* </video> */}
         </div>
         <p className="body-text">{strings.soundPhysics.paragraphs[1]}</p>
         <p className="body-text">{strings.soundPhysics.paragraphs[2]}</p>
         <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-          <video width="80%" autoPlay loop muted style={{ margin: 'auto' }}>
+          {/* <video width="80%" autoPlay loop muted style={{ margin: 'auto' }}>
             <source src={require("./assets/wave0001-0128.webm")} type="video/WebM" />
-          </video>
+          </video> */}
+          <img src={require('./assets/wave.gif')} width='100%' />
         </div>
         <p className="body-text">{highlighter(strings.soundPhysics.paragraphs[3])}</p>
         <p className="body-text">{highlighter(strings.soundPhysics.paragraphs[4])}</p>
@@ -58,9 +66,10 @@ class App extends Component<any, any>  {
         <h3 className="subtitle">{strings.fm.title}</h3>
         <p className="body-text">{strings.fm.paragraphs[0]}</p>
         <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-          <video width="80%" autoPlay loop muted style={{ margin: 'auto' }}>
+          {/* <video width="80%" autoPlay loop muted style={{ margin: 'auto' }}>
             <source src={require("./assets/fm.mp4")} type="video/mp4" />
-          </video>
+          </video> */}
+          <img src={require('./assets/fm.gif')} width='100%' />
         </div>
         <p className="body-text">{strings.fm.paragraphs[1]}</p>
         <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
@@ -71,8 +80,10 @@ class App extends Component<any, any>  {
         <FMSynthesis ctx={this.ctx} />
         <h3 className="subtitle">{strings.others.title}</h3>
         <p className="body-text">{strings.others.paragraphs[0]}</p>
-        <p className="body-text">{strings.others.paragraphs[1]}</p>
-        <p className="body-text">{strings.others.paragraphs[2]}</p>
+        <p className="body-text">{highlighter(strings.others.paragraphs[1])}</p>
+        <p className="body-text">{highlighter(strings.others.paragraphs[2])}</p>
+        <div style={{ width: 10, height: 50 }} />
+        <p className="footer">Duvida ou sugestão? Fale comigo, meu nome é Gabriel: ggyshay@gmail.com</p>
       </div>
     );
   }
@@ -80,7 +91,7 @@ class App extends Component<any, any>  {
 
 const highlighter = text => {
   const achoredText = '$' + text + '$';
-  const pieces = achoredText.split(/(<strong>)|(<\/strong>)/).filter(piece => piece && !piece.includes('strong'))
+  const pieces = achoredText.split(/(<strong>)|(<\/strong>)/).filter(piece => piece && !piece.includes('strong>'))
   return <React.Fragment>
     {pieces.map((piece, idx) => {
       const cleanPiece = piece.replace('$', '');

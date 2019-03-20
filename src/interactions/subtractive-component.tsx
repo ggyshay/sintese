@@ -1,11 +1,15 @@
 import React from 'react';
 import { DisplayComponent } from '../components/display';
 import { Knob } from '../components/knob';
+import "./interactions.css"
+import { Colors } from '../utils/constants';
+import { PlayButton } from '../components/play-button';
 
 export interface SubtractiveSynthesisComponentProps {
     onFrequencyChange: (value: number) => void;
     frequency: number;
     onFilterTypeChange: (type: String) => void;
+    selectedFilter: string;
     onStart: () => void;
     onStop: () => void;
     filterResponse: Float32Array
@@ -27,14 +31,16 @@ export class SubtractiveSynthesisComponent extends React.Component<SubtractiveSy
         }
         const outputResponse = [];
         for (let i = 0; i < this.props.outputResponse.length; i++) {
-            outputResponse.push({ x:i, y: 20*Math.exp(this.props.outputResponse[i]/100) })
+            outputResponse.push({ x: i, y: 20 * Math.exp(this.props.outputResponse[i] / 100) })
         }
+        const filter = this.props.selectedFilter;
         return (
-            <div style={{ width: '100vw', backgroundColor: 'orange', position: 'relative', marginLeft: -200, padding: 20, display: 'flex', justifyContent: 'center', height: 250 }}>
+            <div className="interaction-container">
+                <h1 className="interaction-text">Subtrativa</h1>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                    <div style={{ border: '1px solid black' }}>
-                        <div style={{ height: 150 }}>
-                            <DisplayComponent data={filterResponse} id="asdasdasd" min={0} max={1.8} />
+                    <div>
+                        <div style={{ height: 380, width: 500 }}>
+                            <DisplayComponent data={filterResponse} id="asdasdasd" min={0} max={1.8} color={Colors.coral} />
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <Knob
@@ -44,24 +50,63 @@ export class SubtractiveSynthesisComponent extends React.Component<SubtractiveSy
                                 onChange={this.props.onFrequencyChange}
                                 label={'Frequência'}
                                 logarithmic
+                                color={Colors.coral}
                             />
-                            <div
-                                style={{ width: 20, height: 20, backgroundColor: 'white', margin: 5 }}
-                                onClick={this.handleFilterTypeClick('lowpass')} />
-                            <div
-                                style={{ width: 20, height: 20, backgroundColor: 'white', margin: 5 }}
-                                onClick={this.handleFilterTypeClick('bandpass')} />
-                            <div
-                                style={{ width: 20, height: 20, backgroundColor: 'white', margin: 5 }}
-                                onClick={this.handleFilterTypeClick('highpass')} />
+                            <div style={{width: 60, height: 10}}/>
+                            <div style={{ maxWidth: 50, marginRight: 10 }}>
+                                <div
+                                    style={{
+                                        backgroundColor: (filter === 'lowpass') ? 'white' : Colors.raisinBack,
+                                        margin: 5,
+                                        padding: 5,
+                                        border: '1px solid white'
+                                    }}
+                                    onClick={this.handleFilterTypeClick('lowpass')} >
+
+                                    <img src={require('../assets/lpf-icon.svg')} width={30} />
+                                </div>
+                                <p style={{ color: Colors.white }}>Passa-baixas</p>
+                            </div>
+                            <div style={{ maxWidth: 50, marginRight: 10 }}>
+                                <div
+                                    style={{
+                                        backgroundColor: (filter === 'bandpass') ? 'white' : Colors.raisinBack,
+                                        margin: 5,
+                                        padding: 5,
+                                        border: '1px solid white'
+                                    }}
+                                    onClick={this.handleFilterTypeClick('bandpass')} >
+                                    <img src={require('../assets/bpf-icon.svg')} width={30} />
+                                </div>
+                                <p style={{ color: Colors.white }}>Passa-banda</p>
+                            </div>
+
+                            <div style={{ maxWidth: 50, marginRight: 10 }}>
+                                <div
+                                    style={{
+                                        backgroundColor: (filter === 'highpass') ? 'white' : Colors.raisinBack,
+                                        margin: 5,
+                                        padding: 5,
+                                        border: '1px solid white'
+                                    }}
+                                    onClick={this.handleFilterTypeClick('highpass')} >
+                                    <img src={require('../assets/hpf-icon.svg')} width={30} />
+                                </div>
+                                <p style={{ color: Colors.white }}>Passa-altas</p>
+                            </div>
                         </div>
                     </div>
-                    <div style={{ border: '1px solid blue', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                        <div style={{ height: 150 }}>
-                            <DisplayComponent data={outputResponse} id="asdadfsdg" max={20} min={0} />
-
+                    <div style={{ width: 60, height: 10 }} />
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'space-evenly'
+                    }}>
+                        <div style={{ height: 300, width: 400 }}>
+                            <DisplayComponent data={outputResponse} id="asdadfsdg" max={20} min={0} hasAxis="end" color={Colors.blue} />
                         </div>
-                        <div style={{ backgroundColor: 'green', width: 20, height: 20 }} onClick={this.handlePlayClick} />
+                        <PlayButton onClick={this.handlePlayClick} playing={this.state.isPlaying} />
                     </div>
                 </div>
             </div>

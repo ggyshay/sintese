@@ -1,0 +1,18 @@
+.interaction-container{
+    background-color: #252525;
+    width: 100vw;
+    position: 'relative';
+    margin-left: -200px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.interaction-text{
+    margin-top: 0px;
+    transform: rotate(-90deg);
+    color: #8F8F8F;
+    margin-left: -60px;
+}

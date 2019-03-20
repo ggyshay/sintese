@@ -1,6 +1,9 @@
 import React from 'react';
 import { Knob } from '../components/knob';
 import { DisplayComponent } from '../components/display';
+import { PlayButton } from '../components/play-button';
+import { Colors } from '../utils/constants';
+import { ModulationButton } from '../components/modulation-button';
 
 export interface FMComponentProps {
     onStart: () => void;
@@ -21,7 +24,9 @@ export class FMComponent extends React.Component<FMComponentProps, any> {
         super(props);
 
         this.state = {
-            playing: false
+            playing: false,
+            mod1: false,
+            mod2: true
         }
     }
     render() {
@@ -30,22 +35,44 @@ export class FMComponent extends React.Component<FMComponentProps, any> {
             outputSpectrum.push({ x: Math.log(i + 1), y: this.props.outputSpectrum[i] });
         }
         return (
-            <div style={{ width: '100vw', backgroundColor: 'orange', position: 'relative', marginLeft: -200, padding: 20, display: 'flex', justifyContent: 'center', height: 250 }}>
-                <div>
-                    <div style={{ display: 'flex' }}>
-                        <Knob min={0.1} max={1000} logarithmic onChange={this.props.onF1Change} value={this.props.f1} />
-                        <div style={{ width: 10, height: 10, backgroundColor: 'white' }} onClick={this.props.onMod1Click}/>
-                        <Knob min={0.1} max={1000} logarithmic onChange={this.props.onF2Change} value={this.props.f2} />
-                        <div style={{ width: 10, height: 10, backgroundColor: 'white' }} onClick={this.props.onMod2Click}/>
-                        <Knob min={0.1} max={1000} logarithmic onChange={this.props.onF3Change} value={this.props.f3} />
+            <div className="interaction-container">
+                <h1 className="interaction-text">FM</h1>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', width: 400, justifyContent: 'space-evenly' }}>
+                        <Knob min={0.1}
+                            max={1000}
+                            logarithmic
+                            onChange={this.props.onF1Change}
+                            value={this.props.f1}
+                            color={Colors.coral} />
+                        <div style={{ width: 20, height: 20 }}>
+                            <ModulationButton active={this.state.mod1} onClick={this.handleMod1Click} />
+                        </div>
+                        <Knob min={0.1} max={1000} logarithmic onChange={this.props.onF2Change} value={this.props.f2} color={Colors.coral} />
+                        <div style={{ width: 20, height: 20 }}>
+                            <ModulationButton active={this.state.mod2} onClick={this.handleMod2Click} />
+                        </div>
+                        <Knob min={0.1} max={1000} logarithmic onChange={this.props.onF3Change} value={this.props.f3} color={Colors.coral} />
                     </div>
-                    <div style={{ width: 20, height: 20, backgroundColor: 'green' }} onClick={this.onPlayClick} />
+                    <div style={{ width: 10, height: 40 }} />
+                    <PlayButton onClick={this.onPlayClick} playing={this.state.playing} />
                 </div>
-                <div style={{ border: '1px solid black' }}>
-                    <DisplayComponent data={outputSpectrum} id="completelooney" />
+                <div style={{ width: 60, height: 10 }} />
+                <div style={{ width: 400, height: 300 }}>
+                    <DisplayComponent data={outputSpectrum} id="completelooney" hasAxis="end" color={Colors.blue} />
                 </div>
             </div>
         )
+    }
+
+    handleMod1Click = () => {
+        this.setState({ mod1: !this.state.mod1 });
+        this.props.onMod1Click()
+    }
+
+    handleMod2Click = () => {
+        this.setState({ mod2: !this.state.mod2 });
+        this.props.onMod2Click();
     }
 
     onPlayClick = () => {

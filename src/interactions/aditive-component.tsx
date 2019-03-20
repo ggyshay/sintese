@@ -2,6 +2,9 @@ import React from 'react';
 import { VerticalSlider } from '../components';
 import { DisplayComponent } from '../components/display';
 import { ifft } from 'fft-js';
+import { PlayButton } from '../components/play-button';
+import { Colors } from '../utils/constants';
+
 
 export interface AditiveSynthesisComponentProps {
     onStart: () => void;
@@ -22,16 +25,22 @@ export class AditiveSynthesisComponent extends React.Component<AditiveSynthesisC
     }
     render() {
         return (
-            <div style={{ width: '100vw', backgroundColor: 'orange', position: 'relative', marginLeft: -200, padding: 20, display: 'flex', justifyContent: 'center' }}>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: 500, border: '1px solid white' }}>
+            <div className="interaction-container">
+            <h1 className="interaction-text">Aditiva</h1>
+                <div style={{ 
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    width: '80%'}}>
                     <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                            {this.state.values.map((v, idx) => <VerticalSlider onChange={value => this.handleSliderChange(value, idx)} value={v} width={5} />)}
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                            {this.state.values.map((v, idx) => <VerticalSlider onChange={value => this.handleSliderChange(value, idx)} value={v} width={15} color={Colors.coral} />)}
                         </div>
-                        <div style={{ backgroundColor: 'green', width: 20, height: 20, marginTop: 20 }} onClick={this.handlePlayClick} />
+                        <div style={{width: 10, height: 20}}/>
+                        <PlayButton playing={this.state.isPlaying} onClick={this.handlePlayClick}/>
                     </div>
-                    <div style={{ width: 160, height: 160, border: '1px solid black', marginLeft: 20 }}>
-                        <DisplayComponent data={this.state.transform} id="chirros" />
+                    <div style={{ width: 380, height: 380, marginLeft: 20 }}>
+                        <DisplayComponent data={this.state.transform} id="chirros" color={Colors.blue} hasAxis="middle"/>
                     </div>
                 </div>
             </div>
@@ -48,9 +57,9 @@ export class AditiveSynthesisComponent extends React.Component<AditiveSynthesisC
     handleChange = values => {
         let paddedValues = [0, ...values.map(v => v / 100)];
         paddedValues.splice(paddedValues.length - 1, 1)
-        // for (let i = paddedValues.length; i < 1024; i++) {
-        //     paddedValues.push(0);
-        // }
+        for (let i = paddedValues.length; i < 2048; i++) {
+            paddedValues.push(0);
+        }
         const phasors = []
         const imag = new Float32Array(paddedValues.length);
         const real = new Float32Array(paddedValues.length);

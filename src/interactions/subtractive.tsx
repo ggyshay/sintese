@@ -55,6 +55,7 @@ export class SubtractiveSynthesis extends React.Component<any, any> {
             onStop={this.handleStop}
             filterResponse={this.state.filterResponse}
             outputResponse={this.state.outputResponse}
+            selectedFilter={this.filter.type}
         />
     }
 

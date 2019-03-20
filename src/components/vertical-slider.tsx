@@ -7,11 +7,11 @@ export interface VerticalSliderProps {
     onChange?: (value: number) => void;
     value?: number;
     width?: number;
+    color?: string;
 }
 
 export class VerticalSlider extends React.Component<VerticalSliderProps, any>  {
     private _element: any;
-    private cornerY: number;
     constructor(props) {
         super(props);
 
@@ -23,33 +23,38 @@ export class VerticalSlider extends React.Component<VerticalSliderProps, any>  {
         this._element = React.createRef();
     }
 
-    componentDidMount() {
-        this.cornerY = this._element.current && this._element.current.getBoundingClientRect().top;
+    get corner() {
+        return this._element.current && this._element.current.getBoundingClientRect().top;
     }
+
+    get height() {
+        return this._element.current && this._element.current.getBoundingClientRect().height;
+    }
+
     render() {
         return <div
             className='slider-container'
             onMouseDown={this.handleMouseDown}
-            style={{ height: SLIDER_HEIGHT, width: this.props.width }}
-        ref={this._element}
+            style={{ height: '100%', width: this.props.width, flex: 1 }}
+            ref={this._element}
         >
-            <div className='value-display' style={{ height: this.scaleValue(this.props.value), width: this.props.width }} />
+            <div className='value-display' style={{ height: this.scaleValue(this.props.value), width: this.props.width, backgroundColor: this.props.color || 'white' }} />
         </div>
     }
 
     handleChange = (y) => {
-        const rawValue = 100 - 100 * y / SLIDER_HEIGHT
+        const rawValue = 100 - 100 * y / this.height
         const value = Math.min(100, Math.max(rawValue, 0));
         this.props.onChange && this.props.onChange(value)
     }
 
     scaleValue = v => {
-        return (v) * SLIDER_HEIGHT / 100
+        return (v) * this.height / 100
     }
 
     handleMouseDown = e => {
         e.preventDefault();
-        this.handleChange(e.clientY - this.cornerY)
+        this.handleChange(e.clientY - this.corner)
         addEventListener('mousemove', this.handleMouseMove);
         addEventListener('mouseup', () => {
             removeEventListener('mousemove', this.handleMouseMove)
@@ -59,7 +64,7 @@ export class VerticalSlider extends React.Component<VerticalSliderProps, any>  {
     }
 
     handleMouseMove = e => {
-        this.handleChange(e.clientY - this.cornerY)
+        this.handleChange(e.clientY - this.corner)
     }
 
     handleMouseUp = () => { console.log('mouse up') }

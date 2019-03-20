@@ -35,8 +35,8 @@ export const strings = {
         title: 'Síntese Subtrativa',
         paragraphs: [
             `Esta é a síntese mais comum, usada em quase todos os sintetizadores.
-Nela você escolhe uma (ou mais) ondas, que vão ter todo o conteudo harmonico, então voce escolhe, por meio de um filtro, quais harmonicos voce não quer e os remove, dai o nome subtrativa.
-Os filtros costumam ser passa-baixas ( corta frequencias mais altas do que uma frequência escolhida e deixa o resto passar), passa altas (corta as mais baixas do que uma certa frequência e deixa o resto passar) e passa-banda (deixa uma região passar e tudo que esta fora dela não.`
+Nela você escolhe uma onda que vai ter todo o conteudo harmonico, então voce escolhe, por meio de um filtro, quais harmonicos voce não quer e os remove, dai o nome subtrativa.
+Os filtros costumam ser passa-baixas ( corta frequencias mais altas do que uma frequência escolhida e deixa o resto passar), passa altas (corta as mais baixas do que uma certa frequência e deixa o resto passar) ou passa-banda (deixa uma região passar e tudo que esta fora dela não.`
         ]
     },
     fm: {
@@ -52,8 +52,8 @@ Os filtros costumam ser passa-baixas ( corta frequencias mais altas do que uma f
         title: 'Outras Sínteses',
         paragraphs: [
             'As sinteses fm, subtrativa e aditiva são as principais. Porém exitem muitas outras ideias e maneiras de criar o som. ',
-            'Modelagem fisica (Physical modelling) é a sintese que tenta modelar geralmente um instrumento de impacto como um tambor. Nela voce escolhe as caracteristicas da baqueta e do objeto recebendo o impacto.',
-            'Karplus-strong tem um carater mais experimental (o som fica bem diferente e um pouco sem controle) acontece quando se liga a saída de um elemento (pode ser um filtro ou um delay) em sua propria entrada (alguns delays tem o parametro feedback, que deve ser ajustado para algo em torno de 100%) e então mude os parametros como frequência de corte (cutoff), tempo de delay, resonancia entre outros e veja o que acontece!'
+            '<strong>Modelagem fisica (Physical modelling)</strong> é a sintese que tenta modelar geralmente um instrumento de impacto como um tambor. Nela voce escolhe as caracteristicas da baqueta e do objeto recebendo o impacto.',
+            '<strong>Karplus-strong</strong> tem um carater mais experimental (o som fica bem diferente e um pouco sem controle) acontece quando se liga a saída de um elemento (pode ser um filtro ou um delay) em sua propria entrada (alguns delays tem o parametro feedback, que deve ser ajustado para algo em torno de 100%) e então mude os parametros como frequência de corte (cutoff), tempo de delay, resonancia entre outros e veja o que acontece!'
         ]
     }
 

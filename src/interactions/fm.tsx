@@ -25,7 +25,7 @@ export class FMSynthesis extends React.Component<any, FMSynthesisState>{
 
         this.state = {
             freq1: 20,
-            freq2: 333,
+            freq2: 170,
             freq3: 440,
             outputSpectrum: []
         }
@@ -42,7 +42,7 @@ export class FMSynthesis extends React.Component<any, FMSynthesisState>{
         this.osc3.frequency.value = this.state.freq3;
 
         this.amp1 = new GainNode(this.ctx);
-        this.amp1.gain.value = this.state.freq2;
+        this.amp1.gain.value = 0;
         this.amp2 = new GainNode(this.ctx);
         this.amp2.gain.value = this.state.freq3;
 
